@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
+#include "rlib.h"
 
 // int randInt(int n):隨機傳回一個小於 n 的整數 (0,1,2..., n-1)
 // 用法:randInt(5) 會傳回 0, 1, 2, 3, 4 其中之一
@@ -24,7 +21,7 @@ char *randSelect(char* array[], int size) {
   return array[i];
 }
 
-int timeSeed() {
+void timeSeed() {
   long ltime = time(NULL);
   printf("ltime=%ld\n", ltime);
   int stime = (unsigned) ltime/2;
