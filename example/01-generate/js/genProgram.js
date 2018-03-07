@@ -34,6 +34,10 @@ function repeats (f, from=0, prob=0.5, spliter='') {
   } while (true)
 }
 
+function Program () {
+  repeats(Function, 1, 0.5, '\n')
+}
+
 // function fname '(' id {, id}* ') {' Stmt+ '}'  
 function Function () {
   next('function '); fname(); next('(');
@@ -108,4 +112,4 @@ function F () {
   }
 }
 
-repeats(Function, 1, 0.5, '\n')
+Program()
