@@ -1,8 +1,8 @@
 # expc 的執行方法
 
 ```
-$ gcc expc.c -o expc.o
-$ ./expc.o 3+5*8-9/6
+$ gcc compileExp.c -o compileExp.o -std=c99
+$ ./compileExp.o 3+5*8-9/6
 === EBNF Grammar =====
 E=T ([+-] T)*
 T=F ([*/] F)*

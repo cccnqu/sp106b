@@ -2,6 +2,8 @@
 *.o
 *.log
 
+*.bak
+
 # VisualStudio generate
 Release
 Debug

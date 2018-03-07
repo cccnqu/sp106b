@@ -2,13 +2,17 @@
 #include <assert.h>
 #include <string.h>
 
-int tokenIdx = 0;
-char *tokens;
-
-void parse(char *str) {
-     tokens = str;
-     E();
-}
+void parse(char *str);
+void push(char c);
+char pop(char c);
+void printStack();
+char ch();
+char next();
+int isNext(char *set);
+int nextTemp();
+int E();
+int T();
+int F();
 
 int main(int argc, char * argv[]) {
     printf("=== EBNF Grammar =====\n");
@@ -17,6 +21,14 @@ int main(int argc, char * argv[]) {
     printf("F=N | '(' E ')'\n");
     printf("==== parse:%s ========\n", argv[1]);
     parse(argv[1]);
+}
+
+int tokenIdx = 0;
+char *tokens;
+
+void parse(char *str) {
+     tokens = str;
+     E();
 }
 
 char stack[100];
@@ -58,7 +70,6 @@ int isNext(char *set) {
 }
 
 int tempIdx = 0;
-
 int nextTemp() {
     return tempIdx++;
 }
@@ -78,7 +89,6 @@ int E() {
     return t1;
 }
 
-// T=F ([*/] F)*
 int T() {
     push('T');
     int f1 = F();
@@ -93,7 +103,6 @@ int T() {
     return f1;
 }
 
-// F=N | '(' E ')'
 int F() {
     int f;
     push('F');
