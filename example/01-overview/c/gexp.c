@@ -1,4 +1,8 @@
-#include "rlib.c"
+#include "rlib.h"
+
+void E();
+void T();
+void F();
 
 // === EBNF Grammar =====
 // E=T ([+-] T)*
@@ -14,7 +18,7 @@ int main(int argc, char * argv[]) {
 	}
 }
 
-int E() {
+void E() {
     T();
 	while (randInt(10) < 3) {
        printf("%c", randChar("+-"));
@@ -22,7 +26,7 @@ int E() {
 	}
 }
 
-int T() {
+void T() {
     F();
 	if (randInt(10) < 7) {
 		printf("%c", randChar("*/"));
@@ -30,7 +34,7 @@ int T() {
 	}
 }
 
-int F() {
+void F() {
     if (randInt(10) < 8) {
 		printf("%c", randChar("0123456789"));
 	} else {
