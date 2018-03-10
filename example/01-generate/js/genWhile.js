@@ -5,7 +5,7 @@ var p = U.probability
 // === BNF Grammar =====
 // StmtList = Stmt+
 // Stmt = While | Assign
-// While = while Exp { StmtList }
+// While = while '(' Exp ')' { StmtList }
 // Assign = id '=' Exp
 // Exp = T ([+-] T)?
 // T = F ([*/] F)?
@@ -71,4 +71,4 @@ function F () {
   }
 }
 
-StmtList()
+While()
