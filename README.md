@@ -7,7 +7,8 @@
 開課年度   | 106 學年下學期
 學員姓名   | 
 教師姓名   | 陳鍾誠
-上課教材   | [wiki](https://github.com/cccnqu/sp106b/wiki)
+課程教材   | [wiki](https://github.com/cccnqu/sp106b/wiki)
+共用教材   | https://github.com/cccnqu/course/wiki
 程式範例   | [example](example)
 練習作業   | [exercise](exercise)
 專案作品   | [project](project)
