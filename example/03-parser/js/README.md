@@ -1,36 +1,49 @@
 # 剖析器 -- parser
 
-## 詞彙掃描器 -- Lexer
-
 ```
-PS D:\Dropbox\course\sp106b\example\02-parser\js> node lexer
-[ 'a',
-  '=',
-  '3',
-  '+',
-  'x',
-  '-',
-  'num',
-  '*',
-  '99',
-  ';',
-  ' ',
-  '// ',
-  'comment',
-  '\r\n',
-  ' ',
-  'y',
-  '=',
-  '5',
-  ';',
-  ' ',
-  '/* block \r\n comment 1 */',
-  ' ',
-  'z',
-  '=',
-  '3',
-  ';',
-  ' ',
-  '/* block comment 2 */' ]
+csienqu-teacher:js csienqu$ node parseExp
+text=32+5*(182+degree*4-20)
+tokens=["32","+","5","*","(","182","+","degree","*","4","-","20",")"]
++E
+  +T
+    +F
+      32
+    -F
+  -T
+  +
+  +T
+    +F
+      5
+    -F
+    *
+    +F
+      (
+      +E
+        +T
+          +F
+            182
+          -F
+        -T
+        +
+        +T
+          +F
+            degree
+          -F
+          *
+          +F
+            4
+          -F
+        -T
+        -
+        +T
+          +F
+            20
+          -F
+        -T
+      -E
+      )
+    -F
+  -T
+-E
 ```
 
