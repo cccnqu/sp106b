@@ -1,19 +1,15 @@
+// j0c 編譯器，用法範例： node j0c test.j0
 var fs = require("fs");
-var c = require("./ccc");
-
-var isDump = process.argv[3] == "-d";
-
+var util = require("util");
+var log = console.log;     // 將 console.log 名稱縮短一點
+var format = util.format;  // 字串格式化
 var tokens = [];
 var tokenIdx = 0;
 var end = "$END";
-
 var funcName = "main";
 var funcStack = [ funcName ];
 var symTable = {};
 symTable[funcName] = { type:"function", name:"main", pcodes:[] };
-
-var isDump = process.argv[3] == "-d";
-var irText = "", asText="";
 
 var scan=function(text) { 
   var re = new RegExp(/(\/\*[\s\S]*?\*\/)|(\/\/[^\r\n])|(".*?")|(\d+(\.\d*)?)|([a-zA-Z]\w*)|([>=<!\+\-\*\/&%|]+)|(\s+)|(.)/gm);
@@ -29,8 +25,6 @@ var scan=function(text) {
     }
     if (!token.match(/^[\s\r\n]/) && type!="COMMENT") {
       tokens.push({ "token":token, "type":type, "lines":lines });
-	  if (isDump)
-		c.log("token="+token+" type="+type+" lines="+lines);
     }
     lines += token.split(/\n/).length-1;
   }
@@ -40,8 +34,8 @@ var scan=function(text) {
 
 var error=function(expect) {  
   var token = tokens[tokenIdx];
-  c.log("Error: line=%d token (%s) do not match expect (%s)!", token.lines, token.token, expect); 
-  c.log(new Error().stack);
+  log("Error: line=%d token (%s) do not match expect (%s)!", token.lines, token.token, expect); 
+  log(new Error().stack);
   process.exit(1);
 }
 
@@ -49,7 +43,6 @@ var skip=function(o) { if (isNext(o)) next(o); }
 
 var next=function(o) {
   if (o==null || isNext(o)) {
-//    printf("next : %j\n", tokens[tokenIdx]);
     return tokens[tokenIdx++].token;
   }
   error(o);
@@ -67,7 +60,6 @@ var isNext=function(o) {
 
 var nextType=function(o) {
   if (o==null || isNextType(o)) {
-//    printf("next : %j\n", tokens[tokenIdx]);
     return tokens[tokenIdx++].token;
   }
   error(o);
@@ -78,100 +70,10 @@ var isNextType=function(pattern) {
   return (("|"+pattern+"|").indexOf("|"+type+"|")>=0);
 }
 
-var fix=function(s) {
-  if (s == undefined) s = "";
-  return c.fill(' ', s, 8);
-}
-
-var genAs=function(label, op, p, p1, p2) {
-  if (op == "LD" && p1.match(/\d+/)) op = "LDI";
-  asText += c.format("%s %s %s %s %s", fix(label), fix(op), fix(p), fix(p1), fix(p2))+"\n";
-//  c.log("%s %s %s %s %s", fix(label), fix(op), fix(p), fix(p1), fix(p2));
-}
-
-var pcode2as=function(label, op, p, p1, p2) {
-  var asmOp = null;
-  switch (op) {
-	case "" : 
-	  genAs(label, "", "", "", ""); 
-	  break;
-    case "call": 
-	  genAs("", "CALL", p1, "", ""); 
-	  genAs("", "ST", "R1", p, "");
-	  break;
-    case "arg": 
-	  genAs("", "LD", "R1", p, ""); 
-	  genAs("", "PUSH", "R1", "", ""); 
-	  break;
-    case "function": 
-	  genAs(label, "", "", "", ""); 
-	  break;
-	case "param": 
-	  genAs("", "POP", p); 
-	  break;
-	case "=": 
-  	  genAs("", "LD", "R1", p1, "");
-	  genAs("", "ST", "R1", p, "");
-	  break;
-	case "+": case "-": case "*": case "/":
-	  genAs("", "LD", "R1", p1, "");
-	  genAs("", "LD", "R2", p2, "");
-	  switch (op) {
-	    case "+": genAs("", "ADD", "R3", "R1", "R2"); break;
-	    case "-": genAs("", "SUB", "R3", "R1", "R2"); break;
-	    case "*": genAs("", "MUL", "R3", "R1", "R2"); break;
-	    case "/": genAs("", "DIV", "R3", "R1", "R2"); break;
-	  }
-	  genAs("", "ST", "R3", p);
-	  break;
-	case "<=": case ">=": case "<": case ">": case "==": case "!=":
-	  genAs("", "LD", "R1", p1, "");
-	  genAs("", "LD", "R2", p2, "");
-	  genAs("", "LDI","R3", "0", "");
-	  genAs("", "CMP","R1", "R2", "");
-	  var elseLabel = nextElse();
-	  switch (op) {
-	    case "<=": genAs("", "JLE", elseLabel, "", ""); break;
-	    case ">=": genAs("", "JGE", elseLabel, "", ""); break;
-	    case "<" : genAs("", "JLT", elseLabel, "", "");  break;
-	    case ">" : genAs("", "JGT", elseLabel, "", "");  break;
-	    case "==": genAs("", "JEQ", elseLabel, "", "");  break;
-	    case "!=": genAs("", "JNE", elseLabel, "", "");  break;
-	  }
-	  genAs("", "LDI","R3", "1");
-	  genAs(elseLabel, "", "", "");
-	  genAs("", "ST", "R3", p);
-	  break;
-	case "if0":
-	  genAs("", "LDI", "R1", p, "");
-	  genAs("", "CMP", "R1", "0", "");
-	  genAs("", "JEQ", p1, "", "");
-	  break;
-	case "goto":
-	  genAs("", "JMP", p, "", "");
-	  break;
-	case "return": 
-	  genAs("", "LD", "R1", p, "");	
-	  genAs("", "RET", "", "", "");	
-	  break;
-	case "++": case "--": 
-	  genAs("", "LD", "R1", p, "");
-	  switch (op) {
-	    case "++": genAs("", "ADDI", "R1", "R1", "1"); break;
-	    case "--": genAs("", "ADDI", "R1", "R1", "-1"); break;
-	  }
-	  genAs("", "ST", "R1", p, "");
-	  break;
-  }
-}
-
 var pcode=function(label, op, p, p1, p2) {
   symTable[funcName].pcodes.push({"label":label, "op":op, "p":p, "p1":p1, "p2":p2});
-//  c.log("%s %s %s %s %s", fix(label), fix(op), fix(p), fix(p1), fix(p2));
-  var irCode = c.format("%s %s %s %s %s", fix(label), fix(op), fix(p), fix(p1), fix(p2))
-  c.log(irCode);
-  irText += irCode+"\n";
-  pcode2as(label, op, p, p1, p2);
+  var irCode = format("%s\t%s\t%s\t%s\t%s", label, op, p, p1, p2);
+  log(irCode);
 }
 
 var tempIdx = 1;
@@ -188,11 +90,7 @@ var elseIdx = 1;
 var nextElse=function() { return "else"+elseIdx++; }
 
 var compile=function(text) {
-  if (isDump)
-	c.log("text=%s", text);
   scan(text);
-  if (isDump)
-	c.log("tokens=%j", tokens);
   PROG();
 }
 
@@ -201,6 +99,7 @@ var PROG=function() {
   STMTS();
 }
 
+// STMTS = STMT*
 var STMTS=function() {
   while (!isNext("}") && !isNext(end))
     STMT();
@@ -246,9 +145,11 @@ var FOR=function() {
   next("in");
   var e=EXP(); 
   next(")");
-  var t = nextTemp();
-  pcode(startLabel, "<", t, id, e+".length");
-  pcode("", "if0", t, exitLabel, "");
+  var tLen = nextTemp();
+  pcode(startLabel, "length", tLen, e, "");
+  var tCmp = nextTemp();
+  pcode("", "<", tCmp, id, tLen);
+  pcode("", "if0", tCmp, exitLabel, "");
   BLOCK(); 
   pcode("", "goto", startLabel, "", "");
   pcode(exitLabel, "", "", "", "");
@@ -334,8 +235,8 @@ var TERM=function() {
       next("("); 
       while (!isNext(")")) {
         // TERM();
-		var arg = next(null);
-		pcode("", "arg", arg, "", "");
+        var arg = next(null);
+        pcode("", "arg", arg, "", "");
         skip(",");
       }
       next(")");
@@ -389,10 +290,10 @@ var FUNCTION = function() {
 var ARRAY = function() {
   next("[");
   var array = nextTemp();
-  pcode(array, "array", "", "", "");
+  pcode("", "array", array, "", "");
   while (!isNext("]")) {
     var t = TERM();
-    pcode("", "push", array, t, "");
+    pcode("", "apush", array, t, "");
     skip(",");
   }
   next("]");
@@ -403,7 +304,7 @@ var ARRAY = function() {
 var TABLE = function() {
   next("{"); 
   var table = nextTemp();
-  pcode(table, "table", "", "", "");
+  pcode("", "table", table, "", "");
   while (!isNext("}")) {
     var key = TERM(); 
     next(":"); 
@@ -417,10 +318,3 @@ var TABLE = function() {
 
 var source = fs.readFileSync(process.argv[2], "utf8");
 compile(source);
-c.log("================= AS0 ======================================");
-c.log(asText);
-for (var name in symTable) {
-  var sym = symTable[name];
-  if (sym.type == "var")
-    pcode(sym.name, "WORD", "0", "", "");
-}
