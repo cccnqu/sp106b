@@ -77,16 +77,16 @@ int nextTemp() {
 // E=T ([+-] T)*
 int E() {
     push('E');
-    int t1 = T();
+    int i1 = T();
     while (isNext("+-")) {
           char op=next();
-          int t2 = T();
-          int t = nextTemp();
-          printf("t%d=t%d%ct%d\n", t, t1, op, t2);
-          t1 = t;
+          int i2 = T();
+          int i = nextTemp();
+          printf("t%d=t%d%ct%d\n", i, i1, op, i2);
+          i1 = i;
     }
     pop('E');
-    return t1;
+    return i1;
 }
 
 int T() {
