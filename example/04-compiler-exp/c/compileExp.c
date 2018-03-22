@@ -5,7 +5,6 @@
 void parse(char *str);
 void push(char c);
 char pop(char c);
-void printStack();
 char ch();
 char next();
 int isNext(char *set);
@@ -44,13 +43,6 @@ char pop(char c) {
   return ctop;
 }
 
-void printStack() {
-  int i;
-  for (i=0; i<top; i++)
-    printf("%c", stack[i]);
-  printf("\n");
-}
-
 char ch() {
   char c = tokens[tokenIdx];
   return c;
@@ -58,9 +50,6 @@ char ch() {
 
 char next() {
   char c = ch();
-  push(c);
-//  printStack();
-  pop(c);
   tokenIdx++;
   return c;
 }
@@ -74,7 +63,7 @@ int nextTemp() {
     return tempIdx++;
 }
 
-// E=T ([+-] T)*
+// E = T ([+-] T)*
 int E() {
     push('E');
     int i1 = T();
@@ -89,6 +78,7 @@ int E() {
     return i1;
 }
 
+// T = F ([*/] F)*
 int T() {
     push('T');
     int f1 = F();
@@ -103,6 +93,7 @@ int T() {
     return f1;
 }
 
+// F = N | '(' E ')'
 int F() {
     int f;
     push('F');
