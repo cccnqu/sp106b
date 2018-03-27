@@ -15,6 +15,48 @@
 * pointer: 指標?
 * temp: 臨時變數
 
+## 範例
+
+參考 http://www.nand2tetris.org/lectures/PDF/lecture%2008%20virtual%20machine%20II.pdf 第 12 頁
+
+呼叫乘法
+
+```
+// computes (7 + 2) * 3 - 5
+push constant 7
+push constant 2
+add
+push constant 3
+call mult
+push constant 5
+sub
+```
+
+乘法 (被呼叫)
+
+```
+function mult 1  // 1 代表有 1 個區域變數。
+push constant 0
+pop local 0 // result (local 0) = 0
+label loop
+push argument 0
+push constant 0
+eq
+if-goto end // if arg0 == 0, jump to end
+push argument 0
+push 1
+sub
+pop argument 0 // arg0--
+push argument 1
+push local 0
+add
+pop local 0 // result += arg1
+goto loop
+label end
+push local 0 // push result
+return
+```
+
 ## Jack 高階語言
 
 檔案 : Average/Main.jack

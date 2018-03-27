@@ -1,4 +1,4 @@
-// jackc 編譯器，用法範例： iojs jackc <file>.jack
+// jackc 編譯器，用法範例： node jackc <file>.jack
 var fs = require("fs");
 var lib = require("./lib");
 var lexer = require("./lexer");

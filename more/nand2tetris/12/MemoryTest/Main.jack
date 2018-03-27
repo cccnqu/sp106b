@@ -6,7 +6,7 @@
 /** Test program for the OS Memory class. */
 class Main {
 
-    /** Performs various memory manipulations. */
+    /** Performs several memory manipulations. */
     function void main() {
         var int temp;
         var Array a, b, c;
@@ -39,4 +39,5 @@ class Main {
         
         return;
     }
+
 }

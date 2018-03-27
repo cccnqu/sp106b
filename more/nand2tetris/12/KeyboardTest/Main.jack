@@ -30,12 +30,12 @@ class Main {
         
             if (c = 137) {
        	        do Output.printString("ok");
-	            do Output.println();
-	            let ok = true;
-	        }
+	        do Output.println();
+	        let ok = true;
 	    }
+	}
 	
-	    let ok = false;
+	let ok = false;
         do Output.printString("readChar test:");
         do Output.println();
         do Output.printString("(Verify that the pressed character is echoed to the screen)");
@@ -47,13 +47,13 @@ class Main {
             do Output.println();
         
             if (c = 51) {
-	            do Output.printString("ok");
-	            do Output.println();
-	            let ok = true;
-	        }
+	        do Output.printString("ok");
+	        do Output.println();
+	        let ok = true;
 	    }
+	}
 	
-    	let ok = false;
+	let ok = false;
         do Output.printString("readLine test:");
         do Output.println();
         do Output.printString("(Verify echo and usage of 'backspace')");
@@ -61,33 +61,34 @@ class Main {
         while (~ok) {
     	    let s = Keyboard.readLine("Please type 'JACK' and press enter: ");
 
-	        if (s.length() = 4) {
-	            if ((s.charAt(0) = 74) & (s.charAt(1) = 65) & (s.charAt(2) = 67) & (s.charAt(3) = 75)) {
-	                do Output.printString("ok");
-   	                do Output.println();
-   	                let ok = true;
-   	            }
+	    if (s.length() = 4) {
+	        if ((s.charAt(0) = 74) & (s.charAt(1) = 65) & (s.charAt(2) = 67) & (s.charAt(3) = 75)) {
+	            do Output.printString("ok");
+   	            do Output.println();
+   	            let ok = true;
+   	        }
     	    }
     	}
 
-	    let ok = false;
+	let ok = false;
         do Output.printString("readInt test:");
         do Output.println();
         do Output.printString("(Verify echo and usage of 'backspace')");
         do Output.println();
         while (~ok) {
-  	        let i = Keyboard.readInt("Please type '-32123' and press enter: ");
+  	    let i = Keyboard.readInt("Please type '-32123' and press enter: ");
 
-	        if (i = (-32123)) {
-	            do Output.printString("ok");
-	            do Output.println();
-	            let ok = true;
-	        }
+	    if (i = (-32123)) {
+	        do Output.printString("ok");
+	        do Output.println();
+	        let ok = true;
 	    }
+	}
         
         do Output.println();
         do Output.printString("Test completed successfully");
         
         return;
     }
+
 }

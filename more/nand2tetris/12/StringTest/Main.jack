@@ -6,15 +6,15 @@
 /** Test program for the OS String class. */
 class Main {
 
-    /** Performs various string manipulations and displays their results. */
+    /** Performs several string manipulations and prints their results. */
     function void main() {
         var String s;
         var String i;
         
-        let s = String.new(0); // a zero-capacity string should be supported
+        let s = String.new(0); // A zero-capacity string should be supported
         do s.dispose();
 
-        let s = String.new(6); // capacity 6, make sure that length 5 is displayed
+        let s = String.new(6); // capacity 6, make sure length 5 will be printed
         let s = s.appendChar(97);
         let s = s.appendChar(98);
         let s = s.appendChar(99);
@@ -80,4 +80,5 @@ class Main {
 
         return;
     }
+
 }

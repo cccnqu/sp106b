@@ -6,7 +6,7 @@
 /** Test program for the OS Sys class. */
 class Main {
 
-    /** Tests the wait method of the Sys class. */
+    /** tests the wait method of the Sys class. */
     function void main() {
         var char key;
 
@@ -15,7 +15,7 @@ class Main {
         do Output.printString("Press any key. After 2 seconds, another message will be printed:");
 
         while (key = 0) {
-	        let key = Keyboard.keyPressed();
+	    let key = Keyboard.keyPressed();
         }
         while (~(key = 0)) {
             let key = Keyboard.keyPressed();
@@ -24,8 +24,9 @@ class Main {
         do Sys.wait(2000);
 
         do Output.println();
-        do Output.printString("Time is up. Make sure that 2 seconds elapsed.");
+        do Output.printString("Time is up. Make sure that 2 seconds had passed.");
         
         return;
     }
+
 }
