@@ -1,7 +1,13 @@
+/* EBNF 語法
+E=T ([+ -] T)*
+T=F ([* /] F)*
+F=NUMBER | ID | ( E )
+*/
+
 var tokens = [];
 var tokenIdx = 0;
 // 本來應該用 .*? 來比對 /*...*/ 註解的，但 javascript 的 . 並不包含 \n, 因此用 \s\S 代替 . 就可以了。
-var retok = /(\/\*[\s\S]*?\*\/)|(\/\/[^\r\n])|(\d+)|([a-zA-Z]\w*)|(\r?\n)|(.)/gm; // *?, +? non greedy, m for multiline
+var retok = /(\/\*[\s\S]*?\*\/)|(\/\/.*\r?\n)|(\d+)|([a-zA-Z]\w*)|(\r?\n)|(.)/gm; // *?, +? non greedy, m for multiline
 var source  = ''
 
 var scan=function(text) { 
