@@ -1,29 +1,11 @@
 {
-  "name": "ai106b",
+  "name": "course",
   "version": "1.0.0",
   "description": "just a course",
   "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "neataptic": "^1.4.7"
-  },
-  "devDependencies": {},
   "scripts": {
     "publish": "git add -A&&git commit -m \"upload\"&&git push origin master"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cccnqu/ai106b.git"
-  },
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cccnqu/ai106b/issues"
-  },
-  "homepage": "https://github.com/cccnqu/ai106b#readme"
+  "license": "ISC"
 }
