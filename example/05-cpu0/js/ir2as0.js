@@ -125,7 +125,7 @@ function ir2as(line) {
 // 將所有中間碼都轉換為組合語言
 for (var i in lines) {
   if (lines[i].trim().length > 0) {
-    log("// %s", lines[i]);
+    log("; %s", lines[i]);
     ir2as(lines[i]);
   }
 }
