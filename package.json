@@ -1,0 +1,7 @@
+{
+  "name": "xxx",
+  "version": "1.0.0",
+  "scripts": {
+    "publish": "git add -A&&git commit -m \"upload\"&&git push origin master"
+  }
+}
