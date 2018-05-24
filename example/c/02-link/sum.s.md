@@ -5,12 +5,12 @@
 _sum:                                   ## @sum
 	.cfi_startproc
 ## BB#0:
-	pushq	%rbp
+	pushq	%rbp ## 儲存上一層函數的框架暫存器
 Lcfi0:
 	.cfi_def_cfa_offset 16
 Lcfi1:
 	.cfi_offset %rbp, -16
-	movq	%rsp, %rbp
+	movq	%rsp, %rbp  ## 儲存返回點 (rsp 應該是連結暫存器，在 call 時被放入返回位址)
 Lcfi2:
 	.cfi_def_cfa_register %rbp
 	movl	%edi,n

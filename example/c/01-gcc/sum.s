@@ -14,6 +14,7 @@ Lcfi1:
 Lcfi2:
 	.cfi_def_cfa_register %rbp
 	movl	%edi, -4(%rbp)
+	movl	$0, -8(%rbp)
 	movl	$0, -12(%rbp)
 LBB0_1:                                 ## =>This Inner Loop Header: Depth=1
 	movl	-12(%rbp), %eax
