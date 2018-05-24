@@ -162,10 +162,11 @@ function toCode(p) {
     if (p.arg.match(/^\d+$/)) {
       address = parseInt(p.arg);
     } else {
-      address = symTable[p.arg]; 
+      address = symTable[p.arg];
       if (typeof address === 'undefined') {
         address = symTop;
-        addSymbol(p.arg, address);        
+        addSymbol(p.arg, address);
+        // throw new Error(p.arg + '===undefined')
       }
     }
     return address; 
