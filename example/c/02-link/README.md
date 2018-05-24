@@ -164,4 +164,5 @@ L_.str:                                 ## @.str
 其中 .cfi_startproc 這些指令是給『除錯器』看的，詳情請參考 DWARF Debugging Information Format
 
 * http://dwarfstd.org/doc/DWARF4.pdf
+  * https://sourceware.org/binutils/docs-2.17/as/Pseudo-Ops.html#Pseudo-Ops
   * https://sourceware.org/binutils/docs-2.17/as/CFI-directives.html#CFI-directives
