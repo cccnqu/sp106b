@@ -86,7 +86,7 @@ Lcfi2:
 	.cfi_def_cfa_register %rbp
 	movl	%edi, -4(%rbp) ## n = edi , edi 是 x86 第一個參數所用的暫存器。
 	movl	$0, -8(%rbp)   ## s=0
-	movl	$0, -12(%rbp)  ## i=0
+	movl	$0, -12(%rbp)  ## i=0
 LBB0_1:                                 ## =>This Inner Loop Header: Depth=1
 	movl	-12(%rbp), %eax ## eax = i
 	cmpl	-4(%rbp), %eax  ## cmp n i
