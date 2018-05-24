@@ -4,6 +4,7 @@
 # linux
 *.o
 *.log
+a.out
 
 *.bak
 
