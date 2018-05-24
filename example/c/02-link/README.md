@@ -109,3 +109,7 @@ LBB0_4:
 
 .subsections_via_symbols
 ```
+
+想了解上述 x86 的呼叫過程，請參考：
+
+* [x64函数调用过程分析](https://www.jianshu.com/p/5a4f2d78cb53)
