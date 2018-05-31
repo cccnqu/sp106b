@@ -1,5 +1,7 @@
 # nand2tetris
 
+# windows
+*.exe
 
 # linux
 *.o
