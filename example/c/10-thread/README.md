@@ -3,8 +3,8 @@
 ## 範例 1 
 
 ```
-$ gcc georgeMary.c -lpthread -o georgeMary
-$ ./georgeMary
+$ gcc georgeMary.c -lpthread -o georgeMary.o
+$ ./georgeMary.o
 George
 ----------------
 Mary
