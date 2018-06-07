@@ -29,26 +29,27 @@ int main(int argc, char *argv[])
 
 void *A() 
 {
-	pthread_mutex_lock(&x);
+    pthread_mutex_lock(&x);
     printf("A lock x\n");
-	pthread_mutex_lock(&y);
+    sleep(1);
+    pthread_mutex_lock(&y);
     printf("A lock y\n");
-
-	pthread_mutex_unlock(&y); 
-	pthread_mutex_unlock(&x); 
+    pthread_mutex_unlock(&y); 
+    pthread_mutex_unlock(&x); 
 
     printf("finished A\n");
 
-	pthread_exit(0);
+    pthread_exit(0);
 }
 
 void *B()
 {
+    
     pthread_mutex_lock(&y);
     printf("B lock y\n");
+    sleep(1);
     pthread_mutex_lock(&x);
     printf("B lock x\n");
-
     pthread_mutex_unlock(&x);
     pthread_mutex_unlock(&y);
 
