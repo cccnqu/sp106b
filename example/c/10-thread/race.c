@@ -9,6 +9,7 @@ void *inc()
   for (int i=0; i<LOOPS; i++) {
     counter = counter + 1;
   }
+  return NULL;
 }
 
 void *dec()
@@ -16,6 +17,7 @@ void *dec()
   for (int i=0; i<LOOPS; i++) {
     counter = counter - 1;
   }
+  return NULL;
 }
 
 

@@ -12,6 +12,7 @@ void *inc()
     counter = counter + 1;
     pthread_mutex_unlock( &mutex1 );
   }
+  return NULL;
 }
 
 void *dec()
@@ -21,6 +22,7 @@ void *dec()
     counter = counter - 1;
     pthread_mutex_unlock( &mutex1 );
   }
+  return NULL;
 }
 
 
