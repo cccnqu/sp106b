@@ -5,6 +5,26 @@
 * [程式人月刊 — 2018年8月號 / 本期焦點 — Thread 、競爭情況、死結的C 語言實作](https://medium.com/%E7%A8%8B%E5%BC%8F%E4%BA%BA%E6%9C%88%E5%88%8A/%E7%A8%8B%E5%BC%8F%E4%BA%BA%E6%9C%88%E5%88%8A-2018%E5%B9%B48%E6%9C%88%E8%99%9F-9a53498150c9)
 * [C 語言 pthread 多執行緒平行化程式設計入門教學與範例 - G. T. Wang](https://blog.gtwang.org/programming/pthread-multithreading-programming-in-c-tutorial/)
 
+解惑
+
+```
+在程式中的 pthread_create() 函數
+
+1. 有些會寫成   pthread_create(&thread1, NULL, &print_george, NULL)
+2. 但有些又寫成pthread_create(&thread1, NULL, inc, NULL) ，
+
+為何有些函數前面加 & ，像是 &print_george，但有些函數前面不加 &, 像是 inc 呢？
+
+仔細想想，對於一個函數（非函數指標）而言，取 & 和不取 & 似乎指的都是同一件事，因為兩者都是 
+ (*op)(...) 的型態，取得的位址都是該函數在記憶體中的位址。
+
+但是對於函數指標（像是 
+
+int (*op)(int a, int b);  op = add;
+
+而言，取 &op 和取 op 指的就不同了， op 是 add 的位址， &op 是 op 的位址。
+```
+
 ## 範例 1 
 
 ```
